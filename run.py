@@ -9,6 +9,7 @@ import torch.optim as optim
 from tensorboard_logger import Logger as TbLogger
 
 from nets.critic_network import CriticNetwork
+from nets.transformer_model import TransformerModel
 from options import get_options
 from train import train_epoch, validate, get_inner_model
 from reinforce_baselines import NoBaseline, ExponentialBaseline, CriticBaseline, RolloutBaseline, WarmupBaseline
@@ -52,7 +53,8 @@ def run(opts):
     # Initialize model
     model_class = {
         'attention': AttentionModel,
-        'pointer': PointerNetwork
+        'pointer': PointerNetwork,
+        'transformer': TransformerModel,
     }.get(opts.model, None)
     assert model_class is not None, "Unknown model: {}".format(model_class)
     model = model_class(
